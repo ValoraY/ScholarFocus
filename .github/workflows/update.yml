@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "{
             \"year_start\": ${{ vars.YEAR_START }},
-            \"authors\": ${{ vars.SCHOLAR_AUTHORS }},
+            \"authors\": ${{ toJson(vars.SCHOLAR_AUTHORS) }},
             \"incremental_limit\": ${{ vars.INCREMENTAL_LIMIT }}
           }" > config_override.json
 
