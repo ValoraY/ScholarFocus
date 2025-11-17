@@ -39,8 +39,14 @@ jobs:
       - name: Run fetch script (with live detailed output)
         run: |
           echo "===== RUNNING fetch_papers.py ====="
-          python -u fetch_papers.py
+          python -u fetch_papers.py 2>&1 | tee fetch_output.log
           echo "===== END OF PYTHON OUTPUT ====="
+
+      - name: Show fetch log
+        run: |
+          echo "----- BEGIN fetch_output.log -----"
+          cat fetch_output.log
+          echo "----- END fetch_output.log -----"
 
       - name: Commit and push updates
         run: |
