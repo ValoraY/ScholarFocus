@@ -2,7 +2,7 @@ name: Update Scholar Papers
 
 on:
   schedule:
-    - cron: "0 2 * * 1"         # 每周一 UTC 02:00 自动运行
+    - cron: "0 2 * * 1"        # 每周一 02:00 UTC 自动运行
   workflow_dispatch:            # 手动运行入口
 
 jobs:
@@ -33,10 +33,17 @@ jobs:
           echo "Generated config_override.json:"
           cat config_override.json
 
-      - name: Run fetch script
+      - name: Run fetch script (with live detailed output)
         run: |
-          set -x
-          python fetch_papers.py
+          echo "===== RUNNING fetch_papers.py ====="
+          python -u fetch_papers.py 2>&1 | tee fetch_output.log
+          echo "===== END OF PYTHON OUTPUT ====="
+
+      - name: Show fetch log
+        run: |
+          echo "----- BEGIN fetch_output.log -----"
+          cat fetch_output.log
+          echo "----- END fetch_output.log -----"
 
       - name: Commit and push updates
         run: |
