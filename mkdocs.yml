@@ -1,0 +1,23 @@
+site_name: ScholarFocus
+site_url: https://ValoraY.github.io/ScholarFocus/
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+nav:
+  - 首页: index.md
+  - 所有论文: data/all_papers.md
+  - 作者:
+      - data/authors/
+plugins:
+  - search
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true

@@ -1,7 +1,9 @@
 name: Update Scholar Papers
 
 permissions:
-  contents: write   # 允许 Actions 推送代码
+  contents: write   # 允许推送代码
+  pages: write      # 允许发布 GitHub Pages
+  id-token: write   # Pages 必须
 
 on:
   schedule:
@@ -24,6 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install scholarly requests beautifulsoup4 httpx[socks]
+          pip install mkdocs mkdocs-material
 
       - name: Generate override config (GitHub Variables)
         run: |
@@ -55,3 +58,23 @@ jobs:
           git add data/ config_override.json
           git commit -m "Auto update papers" || echo "No updates to commit"
           git push
+
+      - name: Build MkDocs site
+        run: |
+          mkdocs build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./site
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
