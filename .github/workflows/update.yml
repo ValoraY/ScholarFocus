@@ -34,7 +34,9 @@ jobs:
           cat config_override.json
 
       - name: Run fetch script
-        run: python fetch_papers.py
+        run: |
+          set -x
+          python fetch_papers.py
 
       - name: Commit and push updates
         run: |
