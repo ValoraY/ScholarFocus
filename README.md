@@ -93,7 +93,7 @@ data/json/zhangsan_zhangsanID.json
 进入：
 
 ```
-GitHub → Settings → Secrets and variables → Actions → Variables
+GitHub → Settings → Secrets and variables → Actions → Variables → New repository variable
 ```
 
 把以下变量创建进去：
@@ -102,7 +102,6 @@ GitHub → Settings → Secrets and variables → Actions → Variables
 | ------------------- | -------------------------------------------- | -------------------------- |
 | `SCHOLAR_AUTHORS`   | `[{"name": "zhangsan", "id": "UxxxxAAAAJ"}]` | 学者列表（JSON）           |
 | `YEAR_START`        | `2023`                                       | 抓取起始年份               |
-| `YEAR_END`          | `2025`                                       | 抓取结束年份               |
 | `INCREMENTAL_LIMIT` | `20`                                         | 每次抓取最新多少篇（增量） |
 
 ### 📌 示例（SCHOLAR_AUTHORS）
@@ -126,7 +125,6 @@ GitHub → Settings → Secrets and variables → Actions → Variables
 ```json
 {
   "year_start": 2023,
-  "year_end": 2025,
   "authors": [],
   "incremental_limit": 20
 }

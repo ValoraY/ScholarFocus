@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 import html
 import os
+from datetime import datetime
 
 # -----------------------------------
 # Logging Helpers
@@ -24,7 +25,7 @@ with open("config.json", "r", encoding="utf-8") as f:
 
 # Required fields (override by GitHub Actions if config_override.json exists)
 YEAR_START = cfg.get("year_start", 2020)
-YEAR_END = cfg.get("year_end", 2025)
+YEAR_END = datetime.now().year
 AUTHORS = cfg.get("authors", [])
 INCREMENTAL_LIMIT = cfg.get("incremental_limit", 20)
 
