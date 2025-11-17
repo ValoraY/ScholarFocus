@@ -1,0 +1,48 @@
+name: Update Scholar Papers
+
+on:
+  schedule:
+    - cron: "0 2 * * 1"       # weekly
+  workflow_dispatch:          # manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install scholarly beautifulsoup4 requests httpx[socks]
+
+      - name: Generate config.json from GitHub Variables
+        run: |
+          echo "{
+            \"year_range\": {
+              \"start\": ${{ vars.YEAR_START }},
+              \"end\": ${{ vars.YEAR_END }}
+            },
+            \"authors\": ${{ vars.SCHOLAR_AUTHORS }},
+            \"fetch_strategy\": {
+              \"incremental_limit\": ${{ vars.INCREMENTAL_LIMIT }}
+            }
+          }" > config_override.json
+
+          echo "Generated config_override.json:"
+          cat config_override.json
+
+      - name: Run crawler
+        run: python fetch_papers.py
+
+      - name: Commit and push updates
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add data/
+          git commit -m "Auto update papers" || echo "No changes"
+          git push
