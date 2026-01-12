@@ -1,6 +1,6 @@
 # All Scholars Paper Collection
 
-## YuhaoZhou Papers (2024-2025)
+## YuhaoZhou Papers (2024-2026)
 
 | Year | Title | Abstract | Link |
 |------|-------|----------|------|
